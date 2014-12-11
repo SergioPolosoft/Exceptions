@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:64f4c3738dba66bb75d6521b4a0ac4b2:629ba5e08d5e74ebe2451d746ecd7b72:a2788deb53d602f9e02d674fc1c00712$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+-->
+<TextureAtlas imagePath="GrassSpriteSheet.png" width="105" height="800">
+    <sprite n="1 Grass Block.png" x="2" y="2" w="101" h="131" pX="0.5" pY="0.5" oX="0" oY="40" oW="101" oH="171"/>
+    <sprite n="2 Grass Block.png" x="2" y="135" w="101" h="131" pX="0.5" pY="0.5" oX="0" oY="40" oW="101" oH="171"/>
+    <sprite n="3 Grass Block.png" x="2" y="268" w="101" h="131" pX="0.5" pY="0.5" oX="0" oY="40" oW="101" oH="171"/>
+    <sprite n="4 Grass Block.png" x="2" y="401" w="101" h="131" pX="0.5" pY="0.5" oX="0" oY="40" oW="101" oH="171"/>
+    <sprite n="5 Grass Block.png" x="2" y="534" w="101" h="131" pX="0.5" pY="0.5" oX="0" oY="40" oW="101" oH="171"/>
+    <sprite n="6 Grass Block.png" x="2" y="667" w="101" h="131" pX="0.5" pY="0.5" oX="0" oY="40" oW="101" oH="171"/>
+</TextureAtlas>
