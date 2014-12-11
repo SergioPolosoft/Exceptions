@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Entities.NullObjects;
@@ -10,12 +9,29 @@ namespace Entities
     {
         public const int Columns = 20;
         public const int Rows = 15;
-        private readonly Position[,] positions;
         private readonly IDictionary<IPosition, ICharacter> positionedCharacters;
+        private Position[,] positions;
 
-        public Map()
+        public Map():this(Columns,Rows)
         {
-            this.positions = new Position[Columns,Rows];
+        }
+
+        private void InitializePositions(int columns, int rows)
+        {
+            this.positions = new Position[columns,rows];
+            for (int x = 0; x < columns; x++)
+            {
+                for (int y = 0; y < rows; y++)
+                {
+                    this.AddPosition(new Position(x,y));
+                }
+            }
+        }
+
+        public Map(int columns, int rows)
+        {
+            Validate(columns, rows);
+            InitializePositions(columns, rows);
 
             positionedCharacters = new Dictionary<IPosition, ICharacter>();
         }
@@ -31,7 +47,7 @@ namespace Entities
             {
                 foreach (var position in Positions)
                 {
-                    if (position!=null)
+                    if (position != null)
                     {
                         return false;
                     }
@@ -43,6 +59,18 @@ namespace Entities
         internal IEnumerable<ICharacter> Characters
         {
             get { return positionedCharacters.Values; }
+        }
+
+        private static void Validate(int columns, int rows)
+        {
+            if (columns <= 0)
+            {
+                throw new ArgumentOutOfRangeException("columns");
+            }
+            if (rows <= 0)
+            {
+                throw new ArgumentOutOfRangeException("rows");
+            }
         }
 
         public IPosition GetPosition(int x, int y)
@@ -59,7 +87,7 @@ namespace Entities
             this.positions[position.X, position.Y] = position;
         }
 
-        internal bool AddCharacterAtPosition(Character character, IPosition position)
+        internal bool AddCharacter(Character character, IPosition position)
         {
             ValidateParameters(character, position);
 
@@ -113,7 +141,6 @@ namespace Entities
                 if (tile == position)
                 {
                     return true;
-
                 }
             }
             return false;
@@ -151,6 +178,38 @@ namespace Entities
             var oldPosition = this.GetPosition(character);
             positionedCharacters.Remove(oldPosition);
             positionedCharacters.Add(position, character);
+        }
+
+        public void AddCharacter(Character character, int x, int y)
+        {
+            ValidateAddCharacterParameters(character, x, y);
+
+            var position = this.GetPosition(x, y);
+            AddCharacter(character, position);
+        }
+
+        private static void ValidateAddCharacterParameters(Character character, int x, int y)
+        {
+            Validate(character);
+            ValidateIsNotNegative(x);
+            ValidateIsNotNegative(y);
+        }
+
+        private static void ValidateIsNotNegative(int parameter)
+        {
+            if (parameter < 0)
+            {
+                throw new ArgumentOutOfRangeException("parameter");
+            }
+        }
+
+        public ICharacter GetCharacterAtPosition(int x, int y)
+        {
+            ValidateIsNotNegative(x);
+            ValidateIsNotNegative(y);
+            var position = this.GetPosition(x, y);
+
+            return GetCharacterAtPosition(position);
         }
     }
 }

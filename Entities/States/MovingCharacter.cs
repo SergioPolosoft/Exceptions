@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace Entities.States
 {
     internal class MovingCharacter : StateBase
@@ -12,17 +9,22 @@ namespace Entities.States
             this.selectedPosition = selectedPosition;
         }
 
-        public override void Select(ICharacter character)
+        public override ICharacter SelectedCharacter
         {
-            
+            get { return this.selectedCharacter; }
         }
 
-        public override ICharacter SelectedCharacter { get { return this.selectedCharacter; } }
-        public override IPosition SelectedPosition { get { return this.selectedPosition; } }
+        public override IPosition SelectedPosition
+        {
+            get { return this.selectedPosition; }
+        }
+
+        public override void Select(ICharacter character)
+        {
+        }
 
         public override void Select(IPosition position)
         {
-            
         }
 
         public override IState GetNextState()

@@ -1,5 +1,6 @@
 #region Using Statements
 
+using System;
 using System.Collections.Generic;
 using Entities;
 using Entities.NullObjects;
@@ -32,7 +33,7 @@ namespace ExceptionsProject
             var southPlayer = new Player(fakeApplicationContext.GetCurrentUser());
             for (int i = 0; i < 3; i++)
             {
-                southPlayer.Add(new Character {Velocity = 4});
+                southPlayer.Add(new Character {Velocity = 10});
             }
 
             var northPlayer = new Player(new User("xavier"));
@@ -78,6 +79,7 @@ namespace ExceptionsProject
                                                 .AddComponent(new Sprite("Content/Character Boy"))
                                                 .AddComponent(new SpriteRenderer(DefaultLayers.Alpha))
                                                 .AddComponent(new RectangleCollider())
+                                                .AddComponent(new CharacterBehavior(character))
                                                 .AddComponent(characterTouchGestures);
                     this.characters.Add(character.Id, (Character) character);
                     characterTouchGestures.TouchTap += touchGestures_TouchTap;
@@ -93,6 +95,29 @@ namespace ExceptionsProject
             {
                 var character = this.characters[entity.Name];
                 game.Select(character);
+            }
+        }
+    }
+
+    public class CharacterBehavior : Behavior
+    {
+        private readonly ICharacter character;
+
+        public CharacterBehavior(ICharacter character)
+        {
+            this.character = character;
+        }
+
+        protected override void Update(TimeSpan gameTime)
+        {
+            var sprite = this.Owner.FindComponent<Sprite>();
+            if (character.CanBeCharged)
+            {
+                sprite.TintColor = Color.Gray;
+            }
+            else
+            {
+                sprite.TintColor = Color.White;
             }
         }
     }

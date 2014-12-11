@@ -6,6 +6,7 @@
         public CharacterStatus Status { get; private set; }
         public int Velocity { get; private set; }
         public Faction Faction { get; private set; }
+        public bool CanBeCharged { get; private set; }
 
         public void Select()
         {

@@ -67,7 +67,7 @@ namespace Entities
         {
             var tile = GetFreeTileOnRow(rowIndex);
 
-            var result = map.AddCharacterAtPosition(character, tile);
+            var result = map.AddCharacter(character, tile);
 
             if (result == false)
             {

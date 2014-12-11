@@ -6,6 +6,7 @@
         CharacterStatus Status { get; }
         int Velocity { get; }
         Faction Faction { get; }
+        bool CanBeCharged { get; }
         void Select();
         void Unselect();
         void MarkToBeCharged();

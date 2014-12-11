@@ -24,14 +24,14 @@ namespace Entities.Tests.ExceptionsGameTests
 
             southPlayerUser = new User("xavier");
             var southPlayer = new Player(southPlayerUser);
-            beast = new Character(){Name = "beast"};
+            beast = new Character {Name = "beast"};
             southPlayer.Add(beast);
             cyclops = new Character {Name = "cyclops", Velocity = 4};
             southPlayer.Add(cyclops);
 
             var northPlayer = new Player(new User("erik"));
-            quicksilver = new Character() { Name = "quicksilver" };
-            scarletWitch = new Character() { Name = "scarletWitch" };
+            quicksilver = new Character { Name = "quicksilver" };
+            scarletWitch = new Character { Name = "scarletWitch" };
             northPlayer.Add(quicksilver);
             northPlayer.Add(scarletWitch);
 
@@ -246,7 +246,7 @@ namespace Entities.Tests.ExceptionsGameTests
                 exceptionsGame.GetPosition(southPlayerCharacterPosition.X,
                                            southPlayerCharacterPosition.Y - cyclops.Velocity + 1);
 
-            exceptionsGame.State.Map.AddCharacterAtPosition(new Character(), positionForCyclops);
+            exceptionsGame.State.Map.AddCharacter(new Character(), positionForCyclops);
 
             exceptionsGame.Select(cyclops);
 
@@ -255,73 +255,6 @@ namespace Entities.Tests.ExceptionsGameTests
                                            southPlayerCharacterPosition.Y - cyclops.Velocity);
 
             Assert.IsFalse(positionToMoveNotSelectable.Selectable);
-        }
-
-        [TestMethod]
-        public void SelectCharacter_AnEnemyCharacterOnPlus6Range_IsMarkedAsChargable()
-        {
-            var cyclopsPosition = exceptionsGame.GetPosition(cyclops);
-
-            var quickSilverPosition = exceptionsGame.GetPosition(cyclopsPosition.X,
-                                                                 cyclopsPosition.Y - 6);
-
-            exceptionsGame.State.Map.AddCharacterAtPosition(quicksilver, quickSilverPosition);
-
-            exceptionsGame.Select(cyclops);
-
-            Assert.IsTrue(quicksilver.CanBeCharged);
-        }
-
-        [TestMethod]
-        public void SelectCharacter_AFriendCharacterOnPlus6Range_IsNotMarkedAsChargable()
-        {
-            var cyclopsPosition = exceptionsGame.GetPosition(cyclops);
-
-            var beastPosition = exceptionsGame.GetPosition(cyclopsPosition.X,
-                                                           cyclopsPosition.Y - 6);
-
-            exceptionsGame.State.Map.AddCharacterAtPosition(beast, beastPosition);
-
-            exceptionsGame.Select(cyclops);
-
-            Assert.IsFalse(beast.CanBeCharged);
-        }
-
-        [TestMethod]
-        public void SelectCharacter_ChangeSelection_ClearChargableCharacters()
-        {
-            var cyclopsPosition = exceptionsGame.GetPosition(cyclops);
-
-            var quickSilverPosition = exceptionsGame.GetPosition(cyclopsPosition.X,
-                                                                 cyclopsPosition.Y - 6);
-
-            exceptionsGame.State.Map.AddCharacterAtPosition(quicksilver, quickSilverPosition);
-
-            exceptionsGame.Select(cyclops);
-
-            exceptionsGame.Select(beast);
-
-            Assert.IsFalse(quicksilver.CanBeCharged);
-        }
-
-        [TestMethod]
-        public void SelectCharacter_NotReachableEnemyOnPlus6Range_IsNotMarkedAsChargeable()
-        {
-            var cyclopsPosition = exceptionsGame.GetPosition(cyclops);
-
-            var quickSilverPosition = exceptionsGame.GetPosition(cyclopsPosition.X,
-                                                                 cyclopsPosition.Y - 6);
-
-            exceptionsGame.State.Map.AddCharacterAtPosition(quicksilver, quickSilverPosition);
-
-            var scarlteWitchPosition = exceptionsGame.GetPosition(quickSilverPosition.X, quickSilverPosition.Y + 1);
-
-            exceptionsGame.State.Map.AddCharacterAtPosition(scarletWitch, scarlteWitchPosition);
-
-            exceptionsGame.Select(cyclops);
-
-            Assert.IsTrue(scarletWitch.CanBeCharged);
-            Assert.IsFalse(quicksilver.CanBeCharged);
         }
     }
 }

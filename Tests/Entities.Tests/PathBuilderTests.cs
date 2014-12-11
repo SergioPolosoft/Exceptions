@@ -1,4 +1,5 @@
 ﻿using System;
+using Entities.NullObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Entities.Tests
@@ -15,7 +16,7 @@ namespace Entities.Tests
         {
             map = InitializeMap();
             cyclops = new Character {Velocity = 4};
-            map.AddCharacterAtPosition(cyclops, map.GetPosition(5, 5));
+            map.AddCharacter(cyclops, map.GetPosition(5, 5));
 
             builder = new PathBuilder(map);
         }
@@ -24,21 +25,14 @@ namespace Entities.Tests
         [ExpectedException(typeof (ArgumentNullException))]
         public void PathBuilder_NullMap_ThrowException()
         {
-            new PathBuilder(null);
+            builder = new PathBuilder(null);
         }
-
-        [TestMethod]
-        [ExpectedException(typeof (ArgumentException))]
-        public void PathBuilder_EmptyMap_ThrowException()
-        {
-            new PathBuilder(new Map());
-        }
-
+        
         [TestMethod]
         [ExpectedException(typeof (ArgumentNullException))]
         public void BuildPath_CharacterIsNull_ThrowException()
         {
-            builder.GetPath(null, new Position(0, 0), 0);
+            builder.GetPath(new NullCharacter(), new Position(0, 0), 0);
         }
 
         [TestMethod]
@@ -119,7 +113,7 @@ namespace Entities.Tests
                                                       cyclopsPosition.Y);
 
             var icemanPosition = map.GetPosition(cyclopsPosition.X - 3, cyclopsPosition.Y);
-            map.AddCharacterAtPosition(new Character(), icemanPosition);
+            map.AddCharacter(new Character(), icemanPosition);
 
             var path = builder.GetPath(cyclops, destinationPosition as Position, cyclops.Velocity);
 

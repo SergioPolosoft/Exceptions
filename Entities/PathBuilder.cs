@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Entities.NullObjects;
 
 namespace Entities
 {
@@ -9,7 +10,7 @@ namespace Entities
         private readonly Map map;
         private readonly IList<Node> openList;
         private readonly IList<Node> closedList;
-        private Position objectivePosition;
+        private IPosition objectivePosition;
         private int maxCostValue;
         private IPosition initialPosition;
 
@@ -29,7 +30,7 @@ namespace Entities
             closedList = new List<Node>();
         }
 
-        public IList<Position> GetPath(Character character, Position position, int maxPathDistance)
+        public IList<Position> GetPath(ICharacter character, IPosition position, int maxPathDistance)
         {
             Validate(character);
             Validate(position);
@@ -174,9 +175,9 @@ namespace Entities
             return cost;
         }
 
-        private void Validate(Position position)
+        private void Validate(IPosition position)
         {
-            if (position == null)
+            if (position is NullPosition || position==null)
             {
                 throw new ArgumentNullException("position");
             }
@@ -186,19 +187,15 @@ namespace Entities
             }
         }
 
-        private void Validate(Character character)
+        private void Validate(ICharacter character)
         {
-            if (character == null)
+            if (character is NullCharacter)
             {
                 throw new ArgumentNullException("character");
             }
             if (this.map.Exists(character) == false)
             {
                 throw new ArgumentException("Character not exists on the map");
-            }
-            if (character.Velocity <= 0)
-            {
-                throw new ArgumentException("Character velocity is required on the algorithm");
             }
         }
         

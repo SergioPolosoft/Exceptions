@@ -87,8 +87,8 @@ namespace Entities.States
                 var chargePosition = this.map.GetPosition(possibleEnemyPosition.X, possibleEnemyPosition.Y + 1);
 
                 var maxPathDistance = selectedCharacter.Velocity + ChargeDistance;
-
-                if (pathBuilder.GetPath(selectedPosition,chargePosition,maxPathDistance).Count>0)
+                
+                if (pathBuilder.GetPath(SelectedCharacter,chargePosition,maxPathDistance).Count>0)
                 {
                     characterAtPosition.MarkToBeCharged();
                 }
@@ -140,8 +140,7 @@ namespace Entities.States
             var position = selectablePosition as Position;
             if (position != null)
             {
-                Character character = (Character) SelectedCharacter;
-                return pathBuilder.GetPath(character, position, maxPathDistance).Count > 0;
+                return pathBuilder.GetPath(SelectedCharacter, position, maxPathDistance).Count > 0;
             }
             return false;
         }
