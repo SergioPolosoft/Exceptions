@@ -3,6 +3,7 @@
     public enum CharacterStatus
     {
         Waiting,
-        Selected
+        Selected,
+        Charging
     }
 }

@@ -44,17 +44,17 @@ namespace Entities.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof (ArgumentNullException))]
-        public void BuildPath_PositionIsNull_ThrowException()
+        public void BuildPath_PositionIsNull_PathIsEmpty()
         {
-            builder.GetPath(cyclops, null, cyclops.Velocity);
+            var path = builder.GetPath(cyclops, null, cyclops.Velocity);
+            Assert.AreEqual(0, path.Count);
         }
 
         [TestMethod]
-        [ExpectedException(typeof (ArgumentException))]
-        public void BuildPath_PositionIsNotOnTheMap_ThrowException()
+        public void BuildPath_PositionIsNotOnTheMap_PathIsEmpty()
         {
-            builder.GetPath(cyclops, new Position(0, 0), cyclops.Velocity);
+            var path = builder.GetPath(cyclops, new Position(0, 0), cyclops.Velocity);
+            Assert.AreEqual(0, path.Count);
         }
 
         [TestMethod]

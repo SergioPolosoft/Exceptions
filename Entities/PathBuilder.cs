@@ -33,7 +33,7 @@ namespace Entities
         public IList<Position> GetPath(ICharacter character, IPosition position, int maxPathDistance)
         {
             Validate(character);
-            Validate(position);
+            position = ToNullSafe(position);
             
             ClearLists();
 
@@ -41,6 +41,15 @@ namespace Entities
             maxCostValue = maxPathDistance;
             initialPosition = map.GetPosition(character);
             return GetPath();
+        }
+
+        private static IPosition ToNullSafe(IPosition position)
+        {
+            if (position == null)
+            {
+                position = new NullPosition();
+            }
+            return position;
         }
 
         private IList<Position> GetPath()
@@ -173,18 +182,6 @@ namespace Entities
             var cost = Math.Abs(position.X - objectivePosition.X) +
                        Math.Abs(position.Y - objectivePosition.Y);
             return cost;
-        }
-
-        private void Validate(IPosition position)
-        {
-            if (position is NullPosition || position==null)
-            {
-                throw new ArgumentNullException("position");
-            }
-            if (map.Exists(position) == false)
-            {
-                throw new ArgumentException("Position not exists.");
-            }
         }
 
         private void Validate(ICharacter character)

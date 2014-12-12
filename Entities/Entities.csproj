@@ -50,6 +50,7 @@
     <Compile Include="Character.cs" />
     <Compile Include="CharacterStatus.cs" />
     <Compile Include="ExceptionsGame.cs" />
+    <Compile Include="Extensions\ListExtension.cs" />
     <Compile Include="Faction.cs" />
     <Compile Include="GameFactory.cs" />
     <Compile Include="ICharacter.cs" />

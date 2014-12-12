@@ -90,7 +90,7 @@ namespace Entities.Tests.ExceptionsGameTests
             var cyclopsPosition = exceptionsGame.GetPosition(cyclops);
 
             var quickSilverPosition = exceptionsGame.GetPosition(cyclopsPosition.X,
-                                                                 cyclopsPosition.Y - 6);
+                                                                 cyclopsPosition.Y - 10);
 
             exceptionsGame.State.Map.AddCharacter(quicksilver, quickSilverPosition);
 
@@ -102,6 +102,12 @@ namespace Entities.Tests.ExceptionsGameTests
 
             Assert.IsTrue(scarletWitch.CanBeCharged);
             Assert.IsFalse(quicksilver.CanBeCharged);
+        }
+
+        [TestMethod]
+        public void SelectChargableCharacter_GameStateIsMovingCharacters()
+        {
+            Assert.Inconclusive();
         }
     }
 }

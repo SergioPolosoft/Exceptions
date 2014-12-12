@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Entities.Extensions;
 using Entities.NullObjects;
 
 namespace Entities.States
@@ -54,10 +57,21 @@ namespace Entities.States
             }
         }
 
-        private void RangeAction(int range, Action<int, int> rangedAction)
+        private void RangeAction(int range, Action<IPosition> rangedAction)
         {
             var position = map.GetPosition(selectedCharacter);
 
+            var positions = GetPositionsInRange(range, position);
+
+            foreach (var element in positions)
+            {
+                rangedAction.Invoke(element);
+            }
+        }
+
+        private IEnumerable<IPosition> GetPositionsInRange(int range, IPosition position)
+        {
+            var positions = new List<IPosition>();
             for (int x = 0; x <= range; x++)
             {
                 var restOfRange = range - x;
@@ -68,32 +82,55 @@ namespace Entities.States
                     int down = position.X + x;
                     int right = position.Y - y;
 
-                    rangedAction.Invoke(up, left);
-                    rangedAction.Invoke(down, left);
-                    rangedAction.Invoke(down, right);
-                    rangedAction.Invoke(up, right);
+                    positions.AddIfNotExists(map.GetPosition(up, left));
+                    positions.AddIfNotExists(map.GetPosition(down, left));
+                    positions.AddIfNotExists(map.GetPosition(down, right));
+                    positions.AddIfNotExists(map.GetPosition(up, right));
                 }
             }
+            return positions;
         }
 
-        private void MarkChargableCharacters(int x, int y)
+        private void MarkChargableCharacters(IPosition possibleEnemyPosition)
         {
-            var possibleEnemyPosition = this.map.GetPosition(x, y);
-
             var characterAtPosition = this.map.GetCharacterAtPosition(possibleEnemyPosition);
 
             if (characterAtPosition.IsEnemy(selectedCharacter))
             {
-                var chargePosition = this.map.GetPosition(possibleEnemyPosition.X, possibleEnemyPosition.Y + 1);
+                var possiblePositions = GetPositionsInRange(1, possibleEnemyPosition);
 
-                var maxPathDistance = selectedCharacter.Velocity + ChargeDistance;
-                
-                if (pathBuilder.GetPath(SelectedCharacter,chargePosition,maxPathDistance).Count>0)
+                if (possiblePositions.Any(ExistsPathToCharge))
                 {
                     characterAtPosition.MarkToBeCharged();
                 }
-                
             }
+        }
+
+        private IEnumerable<IPosition> GetPossibleChargePositions(IPosition possibleEnemyPosition)
+        {
+            var possiblePositions = new List<IPosition>
+                {
+                    // Front
+                    this.map.GetPosition(possibleEnemyPosition.X, possibleEnemyPosition.Y + 1),
+                    // Left
+                    this.map.GetPosition(possibleEnemyPosition.X - 1, possibleEnemyPosition.Y),
+                    // Right
+                    this.map.GetPosition(possibleEnemyPosition.X + 1, possibleEnemyPosition.Y)
+                };
+            return possiblePositions;
+        }
+
+        private bool ExistsPathToCharge(IPosition position)
+        {
+            bool pathToCharge = false;
+
+            if (map.IsFree(position))
+            {
+                var maxPathDistance = selectedCharacter.Velocity + ChargeDistance;
+
+                pathToCharge = pathBuilder.GetPath(SelectedCharacter, position, maxPathDistance).Count > 0;
+            }
+            return pathToCharge;
         }
 
         private void Clear()
@@ -119,30 +156,25 @@ namespace Entities.States
             }
         }
 
-        private void SelectPosition(int x, int y)
+        private void SelectPosition(IPosition selectablePosition)
         {
-            var selectablePosition = this.map.GetPosition(x, y);
-
-            if (selectablePosition is Position && IsNotSelected(selectablePosition) && map.IsFree(selectablePosition) &&
-                CanBeReach(selectablePosition, selectedCharacter.Velocity))
+            if (CanBeSelected(selectablePosition))
             {
                 selectablePosition.Selectable = true;
             }
         }
 
-        private static bool IsNotSelected(IPosition selectablePosition)
+        private bool CanBeSelected(IPosition selectablePosition)
         {
-            return selectablePosition.Selectable == false;
+            return selectablePosition is Position && 
+                   selectablePosition.IsNotSelected &&
+                   map.IsFree(selectablePosition) &&
+                   CanBeReach(selectablePosition, selectedCharacter.Velocity);
         }
 
         private bool CanBeReach(IPosition selectablePosition, int maxPathDistance)
         {
-            var position = selectablePosition as Position;
-            if (position != null)
-            {
-                return pathBuilder.GetPath(SelectedCharacter, position, maxPathDistance).Count > 0;
-            }
-            return false;
+            return pathBuilder.GetPath(SelectedCharacter, selectablePosition, maxPathDistance).Count > 0;
         }
 
         public override void Select(IPosition position)
