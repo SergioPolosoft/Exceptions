@@ -78,6 +78,10 @@ namespace Entities
             }
             if (turnOwner.User == applicationContext.GetCurrentUser() && turnOwner.ChoosenCharacters.Contains(character))
             {
+                if (this.state is WaitingForActions)
+                {
+                    this.state = new CharacterSelectedState(this.map);    
+                }
                 this.state.Select(character);
             }
         }

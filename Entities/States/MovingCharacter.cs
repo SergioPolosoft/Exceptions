@@ -2,10 +2,9 @@ namespace Entities.States
 {
     internal class MovingCharacter : StateBase
     {
-        public MovingCharacter(ICharacter selectedCharacter, Map map, IPosition selectedPosition)
+        public MovingCharacter(Map map, ICharacter selectedCharacter, IPosition selectedPosition) : base(map)
         {
             this.selectedCharacter = selectedCharacter;
-            this.map = map;
             this.selectedPosition = selectedPosition;
         }
 

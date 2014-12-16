@@ -1,5 +1,6 @@
 ﻿using System;
 using Entities.NullObjects;
+using Entities.States;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Security;
 using Security.Fakes;
@@ -40,7 +41,7 @@ namespace Entities.Tests.ExceptionsGameTests
         }
 
         [TestMethod]
-        public void SelectCharacter_CharacterStatusIsSelected()
+        public void SelectCharacter_StateIsCharacterSelected()
         {
             var character = new Character();
             var southPlayer = new Player(southPlayerUser);
@@ -52,12 +53,11 @@ namespace Entities.Tests.ExceptionsGameTests
 
             exceptionsGame.Select(character);
 
-            Assert.AreEqual(CharacterStatus.Selected, character.Status);
-
             var position = exceptionsGame.GetPosition(character);
             var characterOnEntity = exceptionsGame.GetCharacterAtPosition(position);
 
             Assert.AreEqual(CharacterStatus.Selected, characterOnEntity.Status);
+            Assert.IsInstanceOfType(exceptionsGame.State, typeof(CharacterSelectedState));
         }
 
         [TestMethod]

@@ -43,13 +43,13 @@ namespace Entities.Tests.ExceptionsGameTests
         }
         
         [TestMethod]
-        public void SelectPosition_PositionIsNotSelectable_StateIsWaitingForActions()
+        public void SelectPosition_PositionIsNotSelectable_StateIsCharacterSelectedState()
         {
             var newPosition = exceptionsGame.GetPosition(0, 0);
 
             exceptionsGame.Select(newPosition);
 
-            Assert.IsInstanceOfType(exceptionsGame.State, typeof(WaitingForActions));
+            Assert.IsInstanceOfType(exceptionsGame.State, typeof(CharacterSelectedState));
         }
 
         [TestMethod]

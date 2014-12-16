@@ -62,5 +62,10 @@ namespace Entities
         {
             this.CanBeCharged = false;
         }
+
+        public void Charge()
+        {
+            this.status = CharacterStatus.Charging;
+        }
     }
 }

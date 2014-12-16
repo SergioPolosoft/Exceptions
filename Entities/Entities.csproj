@@ -59,6 +59,7 @@
     <Compile Include="Map.cs" />
     <Compile Include="PathBuilder.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="States\CharacterSelectedState.cs" />
     <Compile Include="States\IState.cs" />
     <Compile Include="States\MovingCharacter.cs" />
     <Compile Include="NullObjects\NullCharacter.cs" />

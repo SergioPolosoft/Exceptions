@@ -66,6 +66,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PathBuilderTests.cs" />
     <Compile Include="MapTests.cs" />
+    <Compile Include="CharacterSelectedStateTests.cs" />
+    <Compile Include="CharacterTests.cs" />
     <Compile Include="WaitingForActionsTests\ChargeTests.cs" />
   </ItemGroup>
   <ItemGroup>

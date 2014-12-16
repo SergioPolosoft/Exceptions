@@ -3,7 +3,7 @@
     public interface ICharacter
     {
         string Id { get; }
-        CharacterStatus Status { get; }
+        CharacterStatus Status { get;  }
         int Velocity { get; }
         Faction Faction { get; }
         bool CanBeCharged { get; }
@@ -13,5 +13,6 @@
         bool IsNotMoved();
         bool IsEnemy(ICharacter character);
         void UnmarkAsToBeCharged();
+        void Charge();
     }
 }

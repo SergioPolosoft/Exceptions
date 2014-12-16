@@ -12,6 +12,7 @@ namespace Entities.Tests.WaitingForActionsTests
         
         private Map simplifiedMap;
         private Character cylcops;
+        private CharacterSelectedState state;
 
         [TestInitialize]
         public void TestInitialize()
@@ -22,6 +23,8 @@ namespace Entities.Tests.WaitingForActionsTests
 
             cylcops = new Character { Faction = Faction.South };
             simplifiedMap.AddCharacter(cylcops, HorizontalCenter, LastRow);
+
+            state = new CharacterSelectedState(simplifiedMap);
         }
 
         [TestMethod]
@@ -29,8 +32,6 @@ namespace Entities.Tests.WaitingForActionsTests
         {
             var magneto = new Character { Faction = Faction.North };
             simplifiedMap.AddCharacter(magneto, HorizontalCenter, FirstRow);
-
-            var state = new WaitingForActions(simplifiedMap);
 
             state.Select(cylcops);
 
@@ -45,8 +46,6 @@ namespace Entities.Tests.WaitingForActionsTests
             
             var beast = new Character { Faction = Faction.South };
             simplifiedMap.AddCharacter(beast, HorizontalCenter, FirstRow + 1);
-
-            var state = new WaitingForActions(simplifiedMap);
 
             state.Select(cylcops);
 
@@ -64,8 +63,6 @@ namespace Entities.Tests.WaitingForActionsTests
 
             var blob = new Character { Faction = Faction.North, Name = "Blob" };
             simplifiedMap.AddCharacter(blob, HorizontalCenter + 1, FirstRow + 1);
-
-            var state = new WaitingForActions(simplifiedMap);
 
             state.Select(cylcops);
 
@@ -87,8 +84,6 @@ namespace Entities.Tests.WaitingForActionsTests
             var toad = new Character { Faction = Faction.North, Name = "Toad" };
             simplifiedMap.AddCharacter(toad, HorizontalCenter - 1, FirstRow + 1);
 
-            var state = new WaitingForActions(simplifiedMap);
-
             state.Select(cylcops);
 
             Assert.IsFalse(magneto.CanBeCharged);
@@ -105,8 +100,6 @@ namespace Entities.Tests.WaitingForActionsTests
 
             var blob = new Character { Faction = Faction.North, Name = "Blob" };
             simplifiedMap.AddCharacter(blob, HorizontalCenter - 1, FirstRow + 1);
-
-            var state = new WaitingForActions(simplifiedMap);
 
             state.Select(cylcops);
 
@@ -130,8 +123,6 @@ namespace Entities.Tests.WaitingForActionsTests
 
             var toad = new Character { Faction = Faction.North, Name = "Toad" };
             simplifiedMap.AddCharacter(toad, HorizontalCenter - 1, FirstRow + 4);
-
-            var state = new WaitingForActions(simplifiedMap);
 
             state.Select(cylcops);
 
@@ -159,8 +150,6 @@ namespace Entities.Tests.WaitingForActionsTests
             var angel = new Character { Faction = Faction.South, Name = "Angel" };
             simplifiedMap.AddCharacter(angel, HorizontalCenter, FirstRow + 3);
 
-            var state = new WaitingForActions(simplifiedMap);
-
             state.Select(cylcops);
 
             Assert.IsFalse(magneto.CanBeCharged);
@@ -172,8 +161,6 @@ namespace Entities.Tests.WaitingForActionsTests
             var magneto = new Character { Faction = Faction.North, Name = "Magneto" };
             simplifiedMap.AddCharacter(magneto, HorizontalCenter, FirstRow);
             
-            var state = new WaitingForActions(simplifiedMap);
-
             state.Select(cylcops);
 
             state.Select(magneto);
@@ -197,7 +184,7 @@ namespace Entities.Tests.WaitingForActionsTests
         [TestMethod]
         public void SelectChargableCharacter_SelectedPositionIsTheChargablePositionWithLowerCost()
         {
-            Assert.Inconclusive();
+             Assert.Inconclusive();
         }
     }
 }

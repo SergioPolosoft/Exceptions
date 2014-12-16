@@ -34,5 +34,10 @@
         {
             
         }
+
+        public void Charge()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
