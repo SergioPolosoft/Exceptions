@@ -153,7 +153,7 @@ namespace Entities
 
         private void AddToOpenList(IPosition position)
         {
-            var cost = GetCost(position);
+            var cost = position.CalculateCost(objectivePosition);
             if (IsValid(cost))
             {
                 if (IsOnTheOpenList(position, cost))

@@ -15,5 +15,9 @@
         public string Name { get; private set; }
         public bool Selectable { get; set; }
         public bool IsNotSelected { get; private set; }
+        public int CalculateCost(IPosition position)
+        {
+            return int.MaxValue;
+        }
     }
 }

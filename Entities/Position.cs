@@ -1,4 +1,6 @@
-﻿namespace Entities
+﻿using System;
+
+namespace Entities
 {
     public class Position : IPosition
     {
@@ -22,6 +24,13 @@
         public bool IsNotSelected
         {
             get { return Selectable == false; }
+        }
+
+        public int CalculateCost(IPosition position)
+        {
+            var cost = Math.Abs(this.X - position.X) +
+                       Math.Abs(this.Y - position.Y);
+            return cost;
         }
     }
 }
