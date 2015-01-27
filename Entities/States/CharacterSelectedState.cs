@@ -24,27 +24,11 @@ namespace Entities.States
             
             if (SelectedCharacter.IsEnemy(character))
             {
-                ProcessChargableCharacter(character);
+                selectedCharacter.Charge();
             }
             else
             {
                 ProcessSelection(character);
-            }
-        }
-
-        private void ProcessChargableCharacter(ICharacter character)
-        {
-            if (character.CanBeCharged)
-            {
-                selectedCharacter.Charge();
-
-                var availablePositions = GetPositionsInRange(1, map.GetPosition(character));
-                var selectedCharacterPosition = map.GetPosition(selectedCharacter);
-
-                var lowestCost = availablePositions.Min(x => x.CalculateCost(selectedCharacterPosition));
-                var chargePosition = availablePositions.First(x => x.CalculateCost(selectedCharacterPosition) == lowestCost);
-                
-                SelectPosition(chargePosition);
             }
         }
 

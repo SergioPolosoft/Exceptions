@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Entities.Tests.WaitingForActionsTests
 {
     [TestClass]
-    public class CharacterSelectedStateShould
+    public class ChargeTests
     {
         private const int HorizontalCenter = 3;
         private const int FirstRow = 0;
@@ -28,7 +28,7 @@ namespace Entities.Tests.WaitingForActionsTests
         }
 
         [TestMethod]
-        public void MarkAReachableEnemy_AsCanBeCharged_WhenItIsSelected()
+        public void SelectCharacter_ReachableEnemy_MarkAsCanBeCharged()
         {
             var magneto = new Character { Faction = Faction.North };
             simplifiedMap.AddCharacter(magneto, HorizontalCenter, FirstRow);
@@ -39,7 +39,7 @@ namespace Entities.Tests.WaitingForActionsTests
         }
 
         [TestMethod]
-        public void DoesNotMarkAReachableEnemy_AsCanBeCharged_WhenItIsSelected_IfThereIsNoFreePositionInFront()
+        public void SelectCharacter_ReachableEnemy_NoFreePositionInFront_NOTMarkAsCanBeCharged()
         {
             var magneto = new Character { Faction = Faction.North };
             simplifiedMap.AddCharacter(magneto, HorizontalCenter, FirstRow);
@@ -156,10 +156,10 @@ namespace Entities.Tests.WaitingForActionsTests
         }
 
         [TestMethod]
-        public void SetTheStateOfTheSelectedCharacterToChargingWhenAChargableEnemyIsSelected()
+        public void SelectEnemyChargableCharacter_SelectedCharacterIsOnChargingState()
         {
             var magneto = new Character { Faction = Faction.North, Name = "Magneto" };
-            simplifiedMap.AddCharacter(magneto, HorizontalCenter, FirstRow + 1);
+            simplifiedMap.AddCharacter(magneto, HorizontalCenter, FirstRow);
             
             state.Select(cylcops);
 
@@ -171,36 +171,20 @@ namespace Entities.Tests.WaitingForActionsTests
         [TestMethod]
         public void SelectEnemyNotChargableCharacter_SelectedCharacterIsOnSelectedState()
         {
-            var magneto = new Character { Faction = Faction.North, Name = "Magneto" };
-            simplifiedMap.AddCharacter(magneto, HorizontalCenter, FirstRow);
-
-            var beast = new Character { Faction = Faction.South };
-            simplifiedMap.AddCharacter(beast, HorizontalCenter, FirstRow + 1);
-
-            state.Select(cylcops);
-
-            state.Select(magneto);
-
-            Assert.AreEqual(CharacterStatus.Selected, cylcops.Status);
+            Assert.Inconclusive();
         }
-        
+
+
         [TestMethod]
-        public void SelectThePositionWithLowerCostAsTheSelectedPositionWhenAnEnemyCharacterIsSelected()
+        public void SelectFriendCharacter_SelectedCharacterIsOnSelectedState()
         {
-            var magneto = new Character { Faction = Faction.North, Name = "Magneto" };
-            simplifiedMap.AddCharacter(magneto, HorizontalCenter, FirstRow + 4);
+            Assert.Inconclusive();
+        }
 
-            var beast = new Character { Faction = Faction.South, Name = "Beast" };
-            simplifiedMap.AddCharacter(beast, HorizontalCenter - 3, FirstRow + 4);
-
-            state.Select(beast);
-
-            state.Select(magneto);
-
-            var positionToCharge = state.SelectedPosition;
-
-            Assert.AreEqual(FirstRow + 4, positionToCharge.Y);
-            Assert.AreEqual(HorizontalCenter - 1, positionToCharge.X);
+        [TestMethod]
+        public void SelectChargableCharacter_SelectedPositionIsTheChargablePositionWithLowerCost()
+        {
+             Assert.Inconclusive();
         }
     }
 }

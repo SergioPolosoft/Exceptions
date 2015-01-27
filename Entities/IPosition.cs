@@ -7,6 +7,5 @@
         string Name { get; }
         bool Selectable { get; set; }
         bool IsNotSelected { get; }
-        int CalculateCost(IPosition position);
     }
 }

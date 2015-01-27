@@ -16,5 +16,10 @@ namespace Entities.Tests
             state = new CharacterSelectedState(null);
         }
 
+        [TestMethod]
+        public void New_CharacterIsEmpty_ExceptionIsThrown()
+        {
+            Assert.Inconclusive();
+        }
     }
 }

@@ -68,7 +68,7 @@
     <Compile Include="MapTests.cs" />
     <Compile Include="CharacterSelectedStateTests.cs" />
     <Compile Include="CharacterTests.cs" />
-    <Compile Include="WaitingForActionsTests\CharacterSelectedStateShould.cs" />
+    <Compile Include="WaitingForActionsTests\ChargeTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Entities\Entities.csproj">
